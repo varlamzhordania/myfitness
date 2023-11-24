@@ -1,4 +1,253 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block content %}
-    home
+    <main>
+        <section class="hero">
+            <div class="card w-75 mx-auto bg-transparent border-0 text-center">
+                <div class="card-header bg-transparent border-0">
+                    {#                    <h1 class="card-title display-3 fw-bold text-light">#}
+                    {#                        Welcome to <strong class="text-primary">NutriTrack</strong>#}
+                    {#                    </h1>#}
+                </div>
+            </div>
+        </section>
+        <section class="container py-5 my-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 align-items-center">
+                <div class="col">
+                    <div class="card bg-transparent border-0">
+                        <img src="{% static 'assets/img/vision.png' %}" alt="vision picture" class="card-img"/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-header bg-transparent border-0">
+                            <h2 class="card-title fw-bold">
+                                Elevate Your <span class="text-secondary">Well-Being</span> Journey
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text fw-normal">
+                                Embark on a transformative odyssey toward holistic health and well-being with NutriTrack
+                                – your ultimate haven for individuals deeply committed to nurturing their bodies, minds,
+                                and spirits. In a world saturated with information, NutriTrack emerges as a guiding
+                                light, offering more than a mere nutrition and fitness tracking platform – it's a
+                                thriving community, an invaluable resource hub, and a steadfast companion on your
+                                wellness expedition.
+                            </p>
+                            <h3 class="fw-bold">
+                                What Sets NutriTrack Apart:
+                            </h3>
+                            <ul class="list-unstyled">
+                                <li class="my-3 custom-list">
+                                    <h4 class="mx-2 text-secondary-emphasis fw-bold">
+                                        Holistic Approach:
+                                    </h4>
+                                    <p class="mx-4 text-light-emphasis fw-bold">
+                                        We believe in a holistic approach to health that goes beyond mere
+                                        numbers. NutriTrack is designed to not only track your nutrition and fitness but
+                                        also to support your mental and emotional well-being.
+                                    </p>
+                                </li>
+                                <li class="my-3 custom-list">
+                                    <h4 class="mx-2 text-secondary-emphasis fw-bold">
+                                        Community-Centric:
+                                    </h4>
+                                    <p class="mx-4 text-light-emphasis fw-bold">
+                                        Our platform is built around a vibrant and supportive community.
+                                        Share your successes, seek advice, and connect with like-minded individuals who
+                                        are
+                                        on similar wellness journeys.
+                                    </p>
+                                </li>
+                                <li class="my-3 custom-list">
+                                    <h4 class="mx-2 text-secondary-emphasis fw-bold">
+                                        Educational Resources:
+                                    </h4>
+                                    <p class="mx-4 text-light-emphasis fw-bold">
+                                        Knowledge is a powerful tool for wellness. NutriTrack
+                                        provides articles, tips, and insights into nutrition, fitness, and overall
+                                        health,
+                                        empowering you to make informed decisions.
+                                    </p>
+                                </li>
+                                <li class="my-3 custom-list">
+                                    <h4 class="mx-2 text-secondary-emphasis fw-bold">
+                                        Personalization:
+                                    </h4>
+                                    <p class="mx-4 text-light-emphasis fw-bold">
+                                        We understand that one size doesn't fit all. NutriTrack adapts to
+                                        your unique needs, allowing you to set personalized goals, preferences, and
+                                        aspirations.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-5 my-5 bg-primary-subtle">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-gap-4">
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-lg bg-dark">
+                            <div class="card-header bg-transparent border-0">
+                                <h3 class="card-title text-light fw-bold">
+                                    Comprehensive Nutrition Tracking:
+                                </h3>
+                            </div>
+                            <div class="card-body pt-0">
+                                <p class="card-text text-white-50">
+                                    NutriTrack masterfully simplifies the intricate dance of nutrition tracking. From
+                                    micronutrients to macronutrients, seamlessly log every culinary adventure. Our
+                                    user-friendly interface ensures effortless recording, providing profound insights
+                                    into
+                                    your dietary habits.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-2 bg-transparent">
+                            <div class="card-header bg-transparent border-0">
+                                <h3 class="card-title">
+                                    Personalized Health Goals:
+                                </h3>
+                            </div>
+                            <div class="card-body pt-0">
+                                <p class="card-text">
+                                    Tailor your health goals to mirror your aspirations. NutriTrack empowers you to set
+                                    realistic objectives – be it shedding a few pounds, building lean muscle, or
+                                    fostering a
+                                    sustainable lifestyle. Witness the unfolding of your progress, celebrating each
+                                    milestone along the way.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-2 bg-transparent">
+                            <div class="card-header bg-transparent border-0">
+                                <h3 class="card-title">
+                                    Weight Management Insight:
+                                </h3>
+                            </div>
+                            <div class="card-body pt-0">
+                                <p class="card-text">
+                                    Our integrated weight tracker transcends a mere scale; it becomes your trusted
+                                    confidant
+                                    in comprehending your body's unique journey. Track fluctuations, explore
+                                    correlations,
+                                    and gain valuable insights into your weight management progress.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-lg bg-dark">
+                            <div class="card-header bg-transparent border-0">
+                                <h3 class="card-title text-light fw-bold">
+                                    Nutritional Database Powerhouse:
+                                </h3>
+                            </div>
+                            <div class="card-body pt-0">
+                                <p class="card-text text-white-50">
+                                    Access a wealth of nutritional information through our collaboration with the USDA
+                                    FoodData Central. NutriTrack ensures the most accurate data at your fingertips,
+                                    facilitating informed choices in your culinary escapades.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container py-5 my-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 align-items-center">
+                <div class="col ">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-header bg-transparent border-0">
+                            <h2 class="card-title fw-bold">
+                                Unveiling the <span class="text-secondary"> NutriTrack </span> Story
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text fw-normal">
+                                Welcome to NutriTrack, where our mission is to empower individuals on their journey to
+                                optimal health and well-being. Founded on the belief that a balanced lifestyle is key to
+                                a fulfilling life, NutriTrack is more than a platform – it's a philosophy. We understand
+                                that the path to wellness is unique for each individual, and our goal is to provide you
+                                with the tools, support, and community to make that journey enriching and achievable.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-transparent border-0">
+                        <img src="{% static 'assets/img/well-being.png' %}" alt="well being picture" class="card-img"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container py-5 my-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 align-items-center">
+                <div class="col">
+                    <div class="card bg-transparent border-0">
+                        <img src="{% static 'assets/img/group.png' %}" alt="vision picture" class="card-img"/>
+                    </div>
+                </div>
+                <div class="col ">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-header bg-transparent border-0">
+                            <h2 class="card-title fw-bold">
+                                Our <span class="text-secondary">Vision</span>:
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text fw-normal">
+                                At NutriTrack, we envision a world where everyone has the knowledge and resources to
+                                make informed and positive choices about their health. We strive to create a community
+                                where individuals inspire and support each other, fostering a culture of well-being that
+                                extends beyond numbers on a scale or nutritional labels.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <section class="py-5 my-5 bg-primary-subtle">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h2 class="fw-bold text-center display-4">
+                        Connect with NutriTrack
+                    </h2>
+                    <ul class="list-unstyled d-flex justify-content-center align-items-center gap-5">
+                        <li class="bg-dark py-1 px-2 rounded-3">
+                            <a href="#" class="link-light">
+                                <i class="bi bi-facebook display-5"></i>
+                            </a>
+                        </li>
+                        <li class="bg-dark py-1 px-2 rounded-3">
+                            <a href="#" class="link-light">
+                                <i class="bi bi-instagram display-5"></i>
+                            </a>
+                        </li>
+                        <li class="bg-dark py-1 px-2 rounded-3">
+                            <a href="#" class="link-light">
+                                <i class="bi bi-youtube display-5"></i>
+                            </a>
+                        </li>
+                        <li class="bg-dark py-1 px-2 rounded-3">
+                            <a href="#" class="link-light">
+                                <i class="bi bi-twitter-x display-5"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </section>
+    </main>
 {% endblock %}

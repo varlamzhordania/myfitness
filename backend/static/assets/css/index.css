@@ -1,0 +1,119 @@
+:root {
+    /* Primary Colors */
+    --primary-main: #FFC107; /* Yellow */
+    --primary-light: #FFD54F;
+    --primary-dark: #FFA000;
+    --primary-text: #ffffff;
+    --primary-rgb: 255, 193, 7; /* RGB representation */
+    --primary-subtle: rgba(255, 193, 7, 0.5); /* Subtle version */
+    --primary-emphasis: #FF8F00; /* Emphasis version */
+
+    /* Secondary Colors */
+    --secondary-main: #3498db; /* Complementary color (Blue) */
+    --secondary-light: #5faee3;
+    --secondary-dark: #1f6488;
+    --secondary-text: #ffffff;
+    --secondary-rgb: 52, 152, 219; /* RGB representation */
+    --secondary-subtle: rgba(52, 152, 219, 0.5); /* Subtle version */
+    --secondary-emphasis: #20638f; /* Emphasis version */
+    /* Background Colors */
+    --background-main: #F5F5F5;
+    --background-secondary: #ffffff;
+
+    --bs-primary: var(--primary-main);
+    --bs-secondary: var(--secondary-main);
+    --bs-primary-rgb: var(--primary-rgb);
+    --bs-secondary-rgb: var(--secondary-rgb);
+    --bs-primary-bg-subtle: var(--primary-subtle);
+    --bs-secondary-bg-subtle: var(--secondary-subtle);
+    --bs-primary-text-emphasis: var(--primary-emphasis);
+    --bs-secondary-text-emphasis: var(--secondary-emphasis);
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-main);
+}
+
+.navbar-brand {
+    --bs-text-opacity: 1;
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.navbar .nav-item .nav-link {
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    border-radius: 6px;
+    color: ghostwhite;
+}
+
+.navbar .nav-item .nav-link:hover, .navbar .nav-item .nav-link:active, .navbar .nav-item .nav-link:focus {
+    --bs-text-opacity: 0.4;
+    background: rgba(var(--primary-rgb), var(--bs-text-opacity)) !important;
+    color: rgba(0, 0, 0, 0.6);
+
+}
+
+.navbar .nav-item .nav-link.active {
+    --bs-text-opacity: 1;
+    background: rgba(var(--primary-rgb), var(--bs-text-opacity)) !important;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.hero {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70vh;
+    background: var(--bs-secondary-bg-subtle);
+    border-radius: 0 0 0 50% / 0 0 0 100%;
+}
+
+.hero-img {
+    position: absolute;
+    display: block;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/*.hero:after {*/
+/*    content: " ";*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    background: rgba(0, 0, 0, 0.6);*/
+/*    z-index: 2;*/
+/*}*/
+
+.hero .card {
+    z-index: 3;
+}
+
+.custom-list {
+    position: relative;
+}
+
+.custom-list::before {
+    content: " ";
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 4px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background: var(--primary-main);
+}
