@@ -32,7 +32,7 @@ def dashboard(request, *args, **kwargs):
 
     today_logs = daily_logs.filter(date=today)
 
-    thirty_days_logs_ago = daily_logs.filter(date__gte=thirty_days_ago)
+    thirty_days_logs_ago = daily_logs.filter(date__gte=thirty_days_ago).order_by("date")
 
     # Calculate the total consumed values from all daily logs
     if nutritional_goal:
@@ -59,7 +59,6 @@ def dashboard(request, *args, **kwargs):
         "percentage_protein": round(percentage_protein, 2),
         "percentage_carbs": round(percentage_carbs, 2),
         "percentage_fats": round(percentage_fats, 2),
-
     }
     return render(request, "dashboard.html", my_context)
 

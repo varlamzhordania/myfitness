@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block content %}
     {% if goal %}
         <section>
@@ -21,25 +22,25 @@
                                     <span class="fw-bold">
                                         Calorie:
                                     </span>
-                                {{ goal.calorie_goal }}
+                                {{ goal.calorie_goal|floatformat }}
                             </li>
                             <li class="d-flex justify-content-start gap-1 align-items-center">
                                     <span class="fw-bold">
                                     Protein:
                                     </span>
-                                {{ goal.protein_goal }}
+                                {{ goal.protein_goal|floatformat }}
                             </li>
                             <li class="d-flex justify-content-start gap-1 align-items-center">
                                     <span class="fw-bold">
-                                    Carbs:
+                                    Carbohydrates:
                                     </span>
-                                {{ goal.carbs_goal }}
+                                {{ goal.carbs_goal|floatformat }}
                             </li>
                             <li class="d-flex justify-content-start gap-1 align-items-center">
                                     <span class="fw-bold">
                                     Fats:
                                     </span>
-                                {{ goal.fats_goal }}
+                                {{ goal.fats_goal|floatformat }}
                             </li>
                         </ul>
                         <hr/>
@@ -76,19 +77,27 @@
                     <div class="col">
                         <div class="card p-3 border-0 shadow">
                             <div class="card-header border-0 bg-transparent">
-                                <h2 class="card-title text-center  text-secondary-emphasis fw-bold">Calorie</h2>
+                                <h2 class="card-title text-center  text-secondary-emphasis fw-bold">Calories</h2>
                             </div>
                             <div class="card-body">
-                                <div class="progress progress-success dynamic-progress">
-                                <span class="progress-left">
-                                    <span class="progress-bar"></span>
-                                </span>
-                                    <span class="progress-right">
-                                    <span class="progress-bar"></span>
-                                </span>
-                                    <div class="progress-value" id="dynamic-progress-value-1"
-                                         data-progress="{{ percentage_calories }}">0%
-                                    </div>
+                                <div class="card-body">
+                                    <div id="progress-1" data-dimension="200" data-text="{{ percentage_calories }}%"
+                                         data-fontsize="36"
+                                         data-percent="{{ percentage_calories }}" data-fgcolor="#30B455"
+                                         data-bgcolor="#eee" data-width="15"
+                                         data-bordersize="4" data-animationstep="1"></div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 d-flex justify-content-center">
+                                    <span class="badge
+                                            {% if days_goal_remaining > 10 %}
+                                            bg-success
+                                            {% elif days_goal_remaining >= 5 and days_goal_remaining < 10 %}
+                                            bg-warning
+                                            {% else %}
+                                            bg-danger
+                                            {% endif %}">
+                                        {{ days_goal_remaining }} Days Remaining
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -99,16 +108,24 @@
                                 <h2 class="card-title text-center  text-secondary-emphasis fw-bold">Protein</h2>
                             </div>
                             <div class="card-body">
-                                <div class="progress progress-danger dynamic-progress">
-                                <span class="progress-left">
-                                    <span class="progress-bar"></span>
-                                </span>
-                                    <span class="progress-right">
-                                    <span class="progress-bar"></span>
-                                </span>
-                                    <div class="progress-value" id="dynamic-progress-value-2"
-                                         data-progress="{{ percentage_protein }}">0%
-                                    </div>
+                                <div class="card-body">
+                                    <div id="progress-2" data-dimension="200" data-text="{{ percentage_protein }}%"
+                                         data-fontsize="36"
+                                         data-percent="{{ percentage_protein }}" data-fgcolor="#30B455"
+                                         data-bgcolor="#eee" data-width="15"
+                                         data-bordersize="4" data-animationstep="1"></div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 d-flex justify-content-center">
+                                    <span class="badge
+                                            {% if days_goal_remaining > 10 %}
+                                            bg-success
+                                            {% elif days_goal_remaining >= 5 and days_goal_remaining < 10 %}
+                                            bg-warning
+                                            {% else %}
+                                            bg-danger
+                                            {% endif %}">
+                                        {{ days_goal_remaining }} Days Remaining
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -119,16 +136,24 @@
                                 <h2 class="card-title text-center  text-secondary-emphasis fw-bold">Carbs</h2>
                             </div>
                             <div class="card-body">
-                                <div class="progress progress-info dynamic-progress">
-                                    <span class="progress-left">
-                                        <span class="progress-bar"></span>
+                                <div class="card-body">
+                                    <div id="progress-3" data-dimension="200" data-text="{{ percentage_carbs }}%"
+                                         data-fontsize="36"
+                                         data-percent="{{ percentage_carbs }}" data-fgcolor="#30B455"
+                                         data-bgcolor="#eee" data-width="15"
+                                         data-bordersize="4" data-animationstep="1"></div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 d-flex justify-content-center">
+                                    <span class="badge
+                                            {% if days_goal_remaining > 10 %}
+                                            bg-success
+                                            {% elif days_goal_remaining >= 5 and days_goal_remaining < 10 %}
+                                            bg-warning
+                                            {% else %}
+                                            bg-danger
+                                            {% endif %}">
+                                        {{ days_goal_remaining }} Days Remaining
                                     </span>
-                                    <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <div class="progress-value" id="dynamic-progress-value-3"
-                                         data-progress="{{ percentage_carbs }}">0%
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,16 +164,24 @@
                                 <h2 class="card-title text-center text-secondary-emphasis  fw-bold">Fats</h2>
                             </div>
                             <div class="card-body">
-                                <div class="progress progress-warning dynamic-progress">
-                                    <span class="progress-left">
-                                        <span class="progress-bar"></span>
+                                <div class="card-body">
+                                    <div id="progress-4" data-dimension="200" data-text="{{ percentage_fats }}%"
+                                         data-fontsize="36"
+                                         data-percent="{{ percentage_fats }}" data-fgcolor="#30B455"
+                                         data-bgcolor="#eee" data-width="15"
+                                         data-bordersize="4" data-animationstep="1"></div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 d-flex justify-content-center">
+                                    <span class="badge
+                                            {% if days_goal_remaining > 10 %}
+                                            bg-success
+                                            {% elif days_goal_remaining >= 5 and days_goal_remaining < 10 %}
+                                            bg-warning
+                                            {% else %}
+                                            bg-danger
+                                            {% endif %}">
+                                        {{ days_goal_remaining }} Days Remaining
                                     </span>
-                                    <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <div class="progress-value" id="dynamic-progress-value-4"
-                                         data-progress="{{ percentage_fats }}">0%
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,54 +241,199 @@
     </section>
     <section>
         <div class="container my-5">
-            <div class="card shadow border-0">
-                <div class="card-body">
-                    <canvas id="dailyLogsChart" width="800" height="400"></canvas>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-gap-4">
+                <div class="col">
+                    <div class="card shadow border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h2 class="card-title text-secondary-emphasis fw-bold">
+                                Last 30 Days Calories Consumed
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="Chart-Calorie" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h2 class="card-title text-secondary-emphasis fw-bold">
+                                Last 30 Days Proteins Consumed
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="Chart-Protein" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h2 class="card-title text-secondary-emphasis fw-bold">
+                                Last 30 Days Carbs Consumed
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="Chart-Carb" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h2 class="card-title text-secondary-emphasis fw-bold">
+                                Last 30 Days Fats Consumed
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="Chart-Fat" width="800" height="400"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
     </main>
 {% endblock %}
 {% block script %}
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'assets/js/progress.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        $(function () {
+            $('#progress-1').circliful();
+            $('#progress-2').circliful();
+            $('#progress-3').circliful();
+            $('#progress-4').circliful();
+        });
+
+    </script>
+
+
+
 
     <script>
         // Fetch the last 30 days of daily logs (adjust the data fetching accordingly)
         const dailyLogsData = [
-            {% for item in thirty_days_logs_ago %}
-                {
-                    date: '{{ item.date }}',
-                    calories: {{ item.total_calories_consumed }},
-                    // Add other properties as needed
-                }
-                // Add a comma for all entries except the last one
-                {% if not forloop.last %},{% endif %}
-            {% endfor %}
+                {% for item in thirty_days_logs_ago %}
+                    {
+                        date: '{{ item.date }}',
+                        calories: {{ item.total_calories_consumed }},
+                        protein: {{ item.total_protein_consumed }},
+                        carbs: {{ item.total_carbs_consumed }},
+                        fats: {{ item.total_fats_consumed }},
+                        weight: {{ item.weight }}
+                    }
+                    // Add a comma for all entries except the last one
+                    {% if not forloop.last %},{% endif %}
+                {% endfor %}
 
-        ];
+            ]
+        ;
 
         // Prepare data for Chart.js
+        const CalorieData = {
+            labels: dailyLogsData.map(entry => entry.date),
+            datasets: [
+                {
+                    label: 'Calories Consumed',
+                    data: dailyLogsData.map(entry => entry.calories),
+                    borderColor: '#198754',
+                    backgroundColor: 'rgba(25, 135, 84,0.1)',
+                    fill: true
+                },
+            ]
+        };
+
+        const ProteinData = {
+            labels: dailyLogsData.map(entry => entry.date),
+            datasets: [
+                {
+                    label: 'Protein Consumed',
+                    data: dailyLogsData.map(entry => entry.protein),
+                    borderColor: '#dc3545',
+                    backgroundColor: 'rgba(220, 53, 69,0.1)',
+                    fill: true
+                },
+            ]
+        };
+
+        const CarbData = {
+            labels: dailyLogsData.map(entry => entry.date),
+            datasets: [
+                {
+                    label: 'Carbohydrates Consumed',
+                    data: dailyLogsData.map(entry => entry.carbs),
+                    borderColor: '#0dcaf0',
+                    backgroundColor: 'rgba(13, 202, 240,0.1)',
+                    fill: true
+                },
+            ]
+        };
+
+        const FatData = {
+            labels: dailyLogsData.map(entry => entry.date),
+            datasets: [
+                {
+                    label: 'Fats Consumed',
+                    data: dailyLogsData.map(entry => entry.fats),
+                    borderColor: '#ffc107',
+                    backgroundColor: 'rgba(255, 193, 7,0.1)',
+                    fill: true
+                },
+            ]
+        };
+
+
         const chartData = {
             labels: dailyLogsData.map(entry => entry.date),
-            datasets: [{
-                label: 'Calories Consumed',
-                data: dailyLogsData.map(entry => entry.calories),
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                fill: {
-                    target: true,
-                    above: 'rgba(255, 193, 7,0.5)',   // Area will be red above the origin
-                    below: 'rgba(255, 193, 7,0)'    // And blue below the origin
-                }
-            }],
+            datasets: [
+
+
+                {
+                    label: 'Weight(KG)',
+                    data: dailyLogsData.map(entry => entry.weight),
+                    borderColor: '#212529',
+                    backgroundColor: 'rgba(33, 37, 41,0.1)',
+                    fill: false
+                },
+            ],
         };
 
         // Get canvas element and render the chart
-        const ctx = document.getElementById('dailyLogsChart')
-        new Chart(ctx, {
+        const ctxCalorie = document.getElementById('Chart-Calorie')
+        const ctxProtein = document.getElementById('Chart-Protein')
+        const ctxCarb = document.getElementById('Chart-Carb')
+        const ctxFat = document.getElementById('Chart-Fat')
+
+
+        new Chart(ctxCalorie, {
             type: 'line',
-            data: chartData,
+            data: CalorieData,
+
+        });
+
+        new Chart(ctxProtein, {
+            type: 'line',
+            data: ProteinData,
+
+        });
+
+        new Chart(ctxCarb, {
+            type: 'line',
+            data: CarbData,
+
+        });
+
+        new Chart(ctxFat, {
+            type: 'line',
+            data: FatData,
 
         });
     </script>
