@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% block content %}
+    <main>
+        <section class="container my-5">
+            <form enctype="multipart/form-data" method="post" action=".">
+                {% csrf_token %}
+                <div class="card border-2 w-75 mx-auto">
+                    <div class="card-body">
+                        <div class="row row-gap-1">
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.first_name.name }}">
+                                    {{ form.first_name.label }}
+                                </label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.last_name.name }}">
+                                    {{ form.last_name.label }}
+                                </label>
+                                {{ form.last_name }}
+                            </div>
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.username.name }}">
+                                    {{ form.username.label }}
+                                </label>
+                                {{ form.username }}
+                            </div>
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.email.name }}">
+                                    {{ form.email.label }}
+                                </label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.password1.name }}">
+                                    {{ form.password1.label }}
+                                </label>
+                                {{ form.password1 }}
+                            </div>
+                            <div class="col col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <label class="form-label" for="{{ form.password2.name }}">
+                                    {{ form.password2.label }}
+                                </label>
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <button class="btn btn-primary w-100" type="submit" role="button">Register</button>
+                        <p>Already have an account ? <a href="{% url "account:login" %}" class="link-danger">Login</a></p>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </main>
+{% endblock %}

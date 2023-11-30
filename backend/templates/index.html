@@ -20,7 +20,7 @@
     <div class="toast-container position-fixed top-0 end-0 p-3">
         {% for message in messages %}
             <div
-                    class="toast {% if message.tags == 'error' %} bg-danger {% elif message.tags == 'info' %} bg-primary {% elif message.tags == 'success' %} bg-success {% else %} bg-primary {% endif %}"
+                    class="toast {% if message.tags == 'error' %} bg-danger {% elif message.tags == 'info' %} bg-secondary {% elif message.tags == 'success' %} bg-success {% else %} bg-primary {% endif %}"
                     role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body text-white">
                     {{ message }}
@@ -37,5 +37,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="{% static 'assets/js/index.js' %}" rel="script"></script>
+{% block script %}
+
+{% endblock %}
 </body>
 </html>
