@@ -21,7 +21,7 @@ class NutritionalGoalAdmin(admin.ModelAdmin):
 
 
 class FoodAdmin(admin.ModelAdmin):
-    list_display = ["name", "calories", "protein", "carbs", "fats"]
+    list_display = ["id", "fcd_id", "name", "calories", "protein", "carbs", "fats"]
 
 
 admin.site.register(DailyLog, DailyLogAdmin)

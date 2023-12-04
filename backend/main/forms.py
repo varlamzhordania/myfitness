@@ -5,6 +5,12 @@ from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 
 
+class FoodForm(forms.ModelForm):
+    class Meta:
+        model = Food
+        fields = "__all__"
+
+
 class ConsumedFoodForm(forms.ModelForm):
     class Meta:
         model = ConsumedFood

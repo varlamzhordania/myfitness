@@ -11,6 +11,7 @@ MEAL_CHOICES = [
 
 
 class Food(models.Model):
+    fcd_id = models.PositiveIntegerField(verbose_name=_("FCD ID"), unique=True, null=True, blank=True)
     name = models.CharField(max_length=255)
     calories = models.FloatField(verbose_name=_("Calories"))
     protein = models.FloatField(verbose_name=_("Protein"))

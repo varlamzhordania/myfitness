@@ -7,7 +7,7 @@
             <div class="card border-0 shadow ">
                 <div class="card-body table-responsive">
                     <button data-bs-target="#log-form" data-bs-toggle="modal" class="btn btn-primary my-3 float-end">
-                        <i class="bi bi-plus-lg"></i> Add new log
+                        <i class="bi bi-ui-checks"></i> Daily Log Form
                     </button>
                     <table class="table table-hover" style="max-height: 400px">
                         <thead>
@@ -78,7 +78,7 @@
                             <h1 class="modal-title fs-5" id="log-form-title">Log Form</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body table-responsive">
+                        <div class="modal-body table-responsive" style="min-height: 600px">
                             <div class="row row-gap-2">
 
                                 <div class="col col-12 col-md-6 col-lg-4">
@@ -126,23 +126,23 @@
                                     <input type="hidden" name="fcd-id-0" class="fcd-id" value=""/>
                                     <td>
                                         <input type="text" name="description-0" value=""
-                                               class="description form-control" disabled/>
+                                               class="description form-control"  readonly/>
                                     </td>
                                     <td>
                                         <input type="number" name="calories-0" step="0.01" value="0"
-                                               class="calories form-control"/>
+                                               class="calories form-control"  readonly/>
                                     </td>
                                     <td>
                                         <input type="number" name="protein-0" step="0.01" value="0"
-                                               class="protein form-control"/>
+                                               class="protein form-control"  readonly/>
                                     </td>
                                     <td>
                                         <input type="number" name="carbs-0" step="0.01" value="0"
-                                               class="carbs form-control"/>
+                                               class="carbs form-control"  readonly/>
                                     </td>
                                     <td>
                                         <input type="number" name="fats-0" step="0.01" value="0"
-                                               class="fats form-control"/>
+                                               class="fats form-control"  readonly/>
                                     </td>
 
                                     <td>
@@ -158,7 +158,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="submit" role="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -236,8 +236,8 @@
                 clonedRow.querySelector(".fcd-id").setAttribute("id", `fcd-id-${idCounter}`)
                 clonedRow.querySelector(".fcd-id").setAttribute("name", `fcd-id-${idCounter}`)
                 clonedRow.querySelector(".fcd-id").value = data.fdcId
-                clonedRow.querySelector(".description").setAttribute("id", `quantity-${idCounter}`);
-                clonedRow.querySelector(".description").setAttribute("name", `quantity-${idCounter}`);
+                clonedRow.querySelector(".description").setAttribute("id", `description-${idCounter}`);
+                clonedRow.querySelector(".description").setAttribute("name", `description-${idCounter}`);
                 clonedRow.querySelector(".description").value = data.description;
                 clonedRow.querySelector(".calories").value = data.foodNutrients.filter((item) => {
                     return item.nutrientId == 1008

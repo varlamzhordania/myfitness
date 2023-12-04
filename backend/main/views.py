@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from .models import DailyLog, NutritionalGoal
+from .models import DailyLog, NutritionalGoal, Food, ConsumedFood
 from datetime import datetime, timedelta
-from .forms import DailyLogCreationForm, ConsumedFoodFormSet
+from .forms import DailyLogCreationForm, ConsumedFoodFormSet, FoodForm
 from django.conf import settings
+from main.utils import fancy_message
 
 
 # Create your views here.
@@ -67,10 +68,62 @@ def dashboard(request, *args, **kwargs):
 
 @login_required
 def logs(request, *args, **kwargs):
+    if request.method == "POST":
+        fd_data = []
+        log_form = DailyLogCreationForm(data=request.POST)
+        if log_form.is_valid():
+            meal = log_form.cleaned_data['meal']
+            weight = log_form.cleaned_data['weight']
+            date = log_form.cleaned_data['date']
+
+            # Check if a DailyLog with the same combination of date, meal, and user exists
+            existing_log = DailyLog.objects.filter(user=request.user, date=date, meal=meal).first()
+
+            if existing_log:
+                # Update the existing log
+                existing_log.weight = weight
+                existing_log.save()
+                log_obj = existing_log
+            else:
+                # Create a new log
+                log_obj = log_form.save(commit=False)
+                log_obj.user = request.user
+                log_obj.save()
+            ConsumedFood.objects.filter(daily_log=log_obj).delete()
+            for key, value in request.POST.items():
+                # Check if the key follows the pattern 'fcd-id-{index}'
+                if key.startswith('fcd-id-'):
+                    index = int(key.split('-')[-1])
+                    if index > 0:
+                        prep_data = {
+                            "fcd_id": int(value),
+                            "name": request.POST.get(f'description-{index}', ''),
+                            "calories": float(request.POST.get(f'calories-{index}', 0)),
+                            "protein": float(request.POST.get(f'protein-{index}', 0)),
+                            "carbs": float(request.POST.get(f'carbs-{index}', 0)),
+                            "fats": float(request.POST.get(f'fats-{index}', 0)),
+                            "quantity": int(request.POST.get(f'quantity-{index}', 1)),
+                        }
+                        fd_data.append(prep_data)
+                        existing_food = Food.objects.filter(fcd_id=prep_data.get("fcd_id")).first()
+                        if existing_food:
+                            food_form = FoodForm(instance=existing_food, data=prep_data)
+                        else:
+                            food_form = FoodForm(data=prep_data)
+                        if food_form.is_valid():
+                            food_obj = food_form.save()
+                            ConsumedFood.objects.create(
+                                food=food_obj,
+                                daily_log=log_obj,
+                                quantity=prep_data.get("quantity", 1)
+                            )
+                            fancy_message(request, "Your daily log successfully submitted")
+                        else:
+                            fancy_message(request, food_form.errors, level="error")
+        else:
+            fancy_message(request, log_form.errors, level="error")
     page = request.GET.get("page", 0)
-
     queryset = DailyLog.objects.filter(user=request.user)
-
     pagination = Paginator(queryset, per_page=10)
     item = pagination.get_page(page)
     form = DailyLogCreationForm()
