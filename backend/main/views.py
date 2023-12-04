@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .models import DailyLog, NutritionalGoal
 from datetime import datetime, timedelta
+from .forms import DailyLogCreationForm, ConsumedFoodFormSet
+from django.conf import settings
 
 
 # Create your views here.
@@ -71,9 +73,11 @@ def logs(request, *args, **kwargs):
 
     pagination = Paginator(queryset, per_page=10)
     item = pagination.get_page(page)
-
+    form = DailyLogCreationForm()
     my_context = {
         "Title": "Logs List",
         "logs": item,
+        "form": form,
+        "token": settings.FDC_TOKEN
     }
     return render(request, "logs.html", my_context)

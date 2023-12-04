@@ -1,17 +1,19 @@
 {% extends "index.html" %}
 {% block content %}
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.02.min.css">
     <main>
         <section class="container my-5">
             <div class="card border-0 shadow ">
                 <div class="card-body table-responsive">
-                    <a href="" class="btn btn-primary my-3 float-end">
+                    <button data-bs-target="#log-form" data-bs-toggle="modal" class="btn btn-primary my-3 float-end">
                         <i class="bi bi-plus-lg"></i> Add new log
-                    </a>
+                    </button>
                     <table class="table table-hover" style="max-height: 400px">
                         <thead>
                         <tr>
                             <th scope="col">Meal</th>
-                            <th scope="col">Weight(KG)</th>
+                            <th scope="col">Weight(Kg)</th>
                             <th scope="col" style="white-space: nowrap">Date Belong</th>
                             <th scope="col" style="white-space: nowrap">Date Created</th>
                             <th scope="col">Actions</th>
@@ -66,5 +68,255 @@
                 </div>
             </div>
         </section>
+        <!-- Modal -->
+        <div class="modal fade" id="log-form" tabindex="-1" aria-labelledby="log-form" aria-hidden="true">
+            <form action="." method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="log-form-title">Log Form</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body table-responsive">
+                            <div class="row row-gap-2">
+
+                                <div class="col col-12 col-md-6 col-lg-4">
+                                    <label class="form-label" for="{{ form.meal.name }}">
+                                        {{ form.meal.label }}
+                                    </label>
+                                    {{ form.meal }}
+                                </div>
+
+                                <div class="col col-12 col-md-6 col-lg-4">
+                                    <label class="form-label" for="{{ form.weight.name }}">
+                                        {{ form.weight.label }}
+                                    </label>
+                                    {{ form.weight }}
+                                </div>
+                                <div class="col col-12 col-lg-4">
+                                    <label class="form-label" for="{{ form.date.name }}">{{ form.date.label }}</label>
+                                    {{ form.date }}
+                                </div>
+                                <div class="col col-12">
+                                    <style>
+                                        .autoComplete_wrapper {
+                                            display: block;
+                                        }
+                                    </style>
+                                    <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off"
+                                           autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1"
+                                           style="width: 100%">
+                                </div>
+                            </div>
+                            <table class="table mt-3">
+                                <thead>
+                                <tr class="table-dark">
+                                    <th width="350">Food</th>
+                                    <th>Calories</th>
+                                    <th>Protein</th>
+                                    <th>Carbs</th>
+                                    <th>Fats</th>
+                                    <th>Quantity</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody id="food-table-body" >
+                                <tr id="template-row" style="display: none;">
+                                    <input type="hidden" name="fcd-id-0" class="fcd-id" value=""/>
+                                    <td>
+                                        <input type="text" name="description-0" value=""
+                                               class="description form-control" disabled/>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="calories-0" step="0.01" value="0"
+                                               class="calories form-control"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="protein-0" step="0.01" value="0"
+                                               class="protein form-control"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="carbs-0" step="0.01" value="0"
+                                               class="carbs form-control"/>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="fats-0" step="0.01" value="0"
+                                               class="fats form-control"/>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" name="quantity-0" step="1" value="1"
+                                               class="quantity form-control"/>
+                                    </td>
+                                    <td>
+                                        <button class="delete-button">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </main>
+{% endblock %}
+{% block script %}
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            let idCounter = 0
+
+            const config = {
+                selector: "#autoComplete",
+                placeHolder: "Search for Food...",
+                data: {
+                    src: async (query) => {
+                        try {
+                            // Fetch Data from external Source
+                            const source = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key={{ token }}&query=${query}`);
+                            // Data should be an array of `Objects` or `Strings`
+                            const data = await source.json();
+                            console.log(data)
+                            return data.foods;
+                        } catch (error) {
+                            return error;
+                        }
+                    },
+                    // Data source 'Object' key to be searched
+                    keys: ["description"]
+                },
+                resultsList: {
+                    element: (list, data) => {
+                        if (!data.results.length) {
+                            // Create "No Results" message element
+                            const message = document.createElement("div");
+                            // Add class to the created element
+                            message.setAttribute("class", "no_result");
+                            // Add message text content
+                            message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                            // Append message element to the results list
+                            list.prepend(message);
+                        }
+                    },
+                    noResults: true,
+                    maxResults: 40,
+                },
+                resultItem: {
+                    highlight: true,
+                },
+                debounce: 300,
+            }
+            const autoCompleteJS = new autoComplete(config);
+
+            document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+                // Increment the counter for unique IDs
+                idCounter++;
+
+                const data = event.detail.selection.value;
+                const tableBody = document.getElementById("food-table-body");
+
+                // Clone the template row and update IDs and values
+                const templateRow = document.getElementById("template-row");
+                const clonedRow = templateRow.cloneNode(true);
+                clonedRow.removeAttribute("id"); // Remove ID to make it unique
+                clonedRow.style.display = "table-row"; // Show the cloned row
+                clonedRow.querySelector(".fcd-id").setAttribute("id", `fcd-id-${idCounter}`)
+                clonedRow.querySelector(".fcd-id").setAttribute("name", `fcd-id-${idCounter}`)
+                clonedRow.querySelector(".fcd-id").value = data.fdcId
+                clonedRow.querySelector(".description").setAttribute("id", `quantity-${idCounter}`);
+                clonedRow.querySelector(".description").setAttribute("name", `quantity-${idCounter}`);
+                clonedRow.querySelector(".description").value = data.description;
+                clonedRow.querySelector(".calories").value = data.foodNutrients.filter((item) => {
+                    return item.nutrientId == 1008
+                })[0].value;
+                clonedRow.querySelector(".calories").setAttribute("id", `calories-${idCounter}`);
+                clonedRow.querySelector(".calories").setAttribute("name", `calories-${idCounter}`);
+                clonedRow.querySelector(".protein").value = data.foodNutrients.filter((item) => {
+                    return item.nutrientId == 1003
+                })[0].value;
+                clonedRow.querySelector(".protein").setAttribute("id", `protein-${idCounter}`);
+                clonedRow.querySelector(".protein").setAttribute("name", `protein-${idCounter}`);
+                clonedRow.querySelector(".carbs").value = data.foodNutrients.filter((item) => {
+                    return item.nutrientId == 1005
+                })[0].value;
+                clonedRow.querySelector(".carbs").setAttribute("id", `carbs-${idCounter}`);
+                clonedRow.querySelector(".carbs").setAttribute("name", `carbs-${idCounter}`);
+                clonedRow.querySelector(".fats").value = data.foodNutrients.filter((item) => {
+                    return item.nutrientId == 1004
+                })[0].value;
+                clonedRow.querySelector(".fats").setAttribute("id", `fats-${idCounter}`);
+                clonedRow.querySelector(".fats").setAttribute("name", `fats-${idCounter}`);
+                {#==========================#}
+                clonedRow.querySelector(".quantity").value = 1;
+                clonedRow.querySelector(".quantity").setAttribute("id", `quantity-${idCounter}`);
+                clonedRow.querySelector(".quantity").setAttribute("name", `quantity-${idCounter}`);
+                clonedRow.querySelector(".delete-button").addEventListener("click", function () {
+                    // Handle delete button click
+                    clonedRow.remove();
+                });
+
+                // Append the cloned row to the table
+                tableBody.appendChild(clonedRow);
+                $('#autoComplete').val('')
+            });
+
+            // Event delegation for delete button clicks
+            document.getElementById("food-table-body").addEventListener("click", function (event) {
+                if (event.target.classList.contains("delete-button")) {
+                    // Handle delete button click
+                    event.target.closest("tr").remove();
+                }
+            });
+
+            $('#add-field').on('click', function () {
+                // Clone the last row in the table
+                var lastRow = $('#formset-table tbody tr:last');
+                var newRow = lastRow.clone();
+
+                // Find all input and select fields in the new row and update their IDs, names, and values
+                newRow.find('input, select').each(function () {
+                    if ($(this).is('input')) {
+                        // Handle input fields
+                        var currentId = $(this).attr('id');
+                        var currentName = $(this).attr('name');
+
+                        // Update IDs
+                        var newId = currentId.replace(/(\d+)/, function (match) {
+                            return parseInt(match) + 1;
+                        });
+
+                        // Update Names
+                        var newName = currentName.replace(/(\d+)/, function (match) {
+                            return parseInt(match) + 1;
+                        });
+
+                        $(this).attr('id', newId);
+                        $(this).attr('name', newName);
+                        $(this).val('');  // Clear the field value
+                    } else if ($(this).is('select')) {
+                        // Handle select fields
+                        $(this).find('option:selected').removeAttr('selected');  // Deselect current option
+                        $(this).find('option:first').attr('selected', 'selected');  // Select the first option
+                    }
+                });
+
+                // Append the new row to the table
+                $('#formset-table tbody').append(newRow);
+            });
+        });
+    </script>
+
 {% endblock %}

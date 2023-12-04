@@ -80,7 +80,7 @@ class NutritionalGoal(models.Model):
 class ConsumedFood(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     daily_log = models.ForeignKey(DailyLog, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(verbose_name=_("Quantity"))
+    quantity = models.PositiveIntegerField(verbose_name=_("Quantity"), default=1)
 
     def __str__(self):
         return f"{self.quantity} {self.food.name} in {self.daily_log}"
