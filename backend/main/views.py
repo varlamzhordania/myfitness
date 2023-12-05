@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .models import DailyLog, NutritionalGoal, Food, ConsumedFood
 from datetime import datetime, timedelta
-from .forms import DailyLogCreationForm, ConsumedFoodFormSet, FoodForm
+from .forms import DailyLogCreationForm, ConsumedFoodFormSet, FoodForm, NutritionalGoalForm
 from django.conf import settings
 from main.utils import fancy_message
 
@@ -20,6 +20,18 @@ def home(request, *args, **kwargs):
 
 @login_required
 def dashboard(request, *args, **kwargs):
+    if request.method == "POST":
+        existing = NutritionalGoal.objects.filter(user=request.user).first()
+        if existing:
+            form = NutritionalGoalForm(instance=existing, data=request.POST)
+        else:
+            form = NutritionalGoalForm(data=request.POST)
+        if form.is_valid():
+            goal_obj = form.save(commit=False)
+            goal_obj.user = request.user
+            goal_obj.is_active = True
+            goal_obj.save()
+
     today = datetime.today()
     thirty_days_ago = today - timedelta(days=30)
     percentage_calories = 0
@@ -31,7 +43,7 @@ def dashboard(request, *args, **kwargs):
     nutritional_goal = NutritionalGoal.objects.filter(user=request.user, is_active=True).first()
 
     # Fetch the user's daily logs up to today
-    daily_logs = DailyLog.objects.filter(user=request.user, date__lte=today)
+    daily_logs = DailyLog.objects.filter(user=request.user, date__gt=nutritional_goal.updated_at)
 
     today_logs = daily_logs.filter(date=today)
 
@@ -50,18 +62,24 @@ def dashboard(request, *args, **kwargs):
         percentage_carbs = (total_carbs_consumed / nutritional_goal.carbs_goal) * 100
         percentage_fats = (total_fats_consumed / nutritional_goal.fats_goal) * 100
 
-        days_remaining = nutritional_goal.date - nutritional_goal.created_at.date()
+        days_remaining = nutritional_goal.date - today.date()
+        if days_remaining.days <= 0:
+            nutritional_goal.is_active = False
+            nutritional_goal.save()
+
+    form = NutritionalGoalForm()
 
     my_context = {
         "Title": "dashboard",
         "logs": today_logs,
         "goal": nutritional_goal,
         "thirty_days_logs_ago": thirty_days_logs_ago,
-        "days_goal_remaining": days_remaining.days,
+        "days_goal_remaining": days_remaining.days if days_remaining != 0 else 0,
         "percentage_calories": round(percentage_calories, 2),
         "percentage_protein": round(percentage_protein, 2),
         "percentage_carbs": round(percentage_carbs, 2),
         "percentage_fats": round(percentage_fats, 2),
+        "form": form
     }
     return render(request, "dashboard.html", my_context)
 
@@ -90,6 +108,7 @@ def logs(request, *args, **kwargs):
                 log_obj.user = request.user
                 log_obj.save()
             ConsumedFood.objects.filter(daily_log=log_obj).delete()
+            successful = True
             for key, value in request.POST.items():
                 # Check if the key follows the pattern 'fcd-id-{index}'
                 if key.startswith('fcd-id-'):
@@ -117,10 +136,14 @@ def logs(request, *args, **kwargs):
                                 daily_log=log_obj,
                                 quantity=prep_data.get("quantity", 1)
                             )
-                            fancy_message(request, "Your daily log successfully submitted")
                         else:
+                            successful = False
                             fancy_message(request, food_form.errors, level="error")
+
+            if successful:
+                fancy_message(request, "Your daily log successfully submitted")
         else:
+            successful = False
             fancy_message(request, log_form.errors, level="error")
     page = request.GET.get("page", 0)
     queryset = DailyLog.objects.filter(user=request.user)

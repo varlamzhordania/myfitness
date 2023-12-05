@@ -1,8 +1,26 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import DailyLog, MEAL_CHOICES, ConsumedFood, Food
+from .models import DailyLog, MEAL_CHOICES, ConsumedFood, Food, NutritionalGoal
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
+
+
+class NutritionalGoalForm(forms.ModelForm):
+    class Meta:
+        model = NutritionalGoal
+        fields = ["calorie_goal", "protein_goal", "carbs_goal", "fats_goal", "date"]
+        widgets = {
+            'calorie_goal': forms.NumberInput(attrs={'class': 'form-control','step':'0.01'}),
+            'protein_goal': forms.NumberInput(attrs={'class': 'form-control','step':'0.01'}),
+            'carbs_goal': forms.NumberInput(attrs={'class': 'form-control','step':'0.01'}),
+            'fats_goal': forms.NumberInput(attrs={'class': 'form-control','step':'0.01'}),
+            'date': forms.DateInput(
+                attrs={
+                    "type": "date",
+                    'class': "form-control"
+                }
+            )
+        }
 
 
 class FoodForm(forms.ModelForm):

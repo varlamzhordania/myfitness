@@ -96,7 +96,11 @@
                                             {% else %}
                                             bg-danger
                                             {% endif %}">
-                                        {{ days_goal_remaining }} Days Remaining
+                                        {% if days_goal_remaining <= 0 %}
+                                            Finished
+                                        {% else %}
+                                            {{ days_goal_remaining }} Days Remaining
+                                        {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -124,7 +128,11 @@
                                             {% else %}
                                             bg-danger
                                             {% endif %}">
-                                        {{ days_goal_remaining }} Days Remaining
+                                               {% if days_goal_remaining <= 0 %}
+                                                   Finished
+                                               {% else %}
+                                                   {{ days_goal_remaining }} Days Remaining
+                                               {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -152,7 +160,11 @@
                                             {% else %}
                                             bg-danger
                                             {% endif %}">
-                                        {{ days_goal_remaining }} Days Remaining
+                                                  {% if days_goal_remaining <= 0 %}
+                                                      Finished
+                                                  {% else %}
+                                                      {{ days_goal_remaining }} Days Remaining
+                                                  {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -180,7 +192,11 @@
                                             {% else %}
                                             bg-danger
                                             {% endif %}">
-                                        {{ days_goal_remaining }} Days Remaining
+                                                     {% if days_goal_remaining <= 0 %}
+                                                         Finished
+                                                     {% else %}
+                                                         {{ days_goal_remaining }} Days Remaining
+                                                     {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -194,7 +210,13 @@
             <div class="alert alert-danger d-flex align-items-center" role="alert">
                 <i class="bi bi-exclamation-triangle-fill"></i>
                 <div>
-                    You Dont Have Any Goal Yet
+                    <p class="mb-0">
+                        You Dont Have Any Goal Yet
+                        <button type="button" class="btn btn-dark text-decoration-underline" data-bs-toggle="modal"
+                                data-bs-target="#goal-modal">
+                            Add Goal
+                        </button>
+                    </p>
                 </div>
             </div>
         </section>
@@ -220,7 +242,6 @@
                             <th scope="col">Weight(Kg)</th>
                             <th scope="col" style="white-space: nowrap">Date Belong</th>
                             <th scope="col" style="white-space: nowrap">Date Created</th>
-                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -230,7 +251,6 @@
                                 <td>{{ log.weight }}</td>
                                 <td>{{ log.date }}</td>
                                 <td>{{ log.created_at }}</td>
-                                <td>info</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -246,7 +266,7 @@
                     <div class="card shadow border-0">
                         <div class="card-header border-0 bg-transparent">
                             <h2 class="card-title text-secondary-emphasis fw-bold">
-                                Last 30 Days Calories Consumed
+                                Calories Consumed During Goal
                             </h2>
                         </div>
                         <div class="card-body">
@@ -258,7 +278,7 @@
                     <div class="card shadow border-0">
                         <div class="card-header border-0 bg-transparent">
                             <h2 class="card-title text-secondary-emphasis fw-bold">
-                                Last 30 Days Proteins Consumed
+                                Proteins Consumed During Goal
                             </h2>
                         </div>
                         <div class="card-body">
@@ -270,7 +290,7 @@
                     <div class="card shadow border-0">
                         <div class="card-header border-0 bg-transparent">
                             <h2 class="card-title text-secondary-emphasis fw-bold">
-                                Last 30 Days Carbs Consumed
+                                Carbs Consumed During Goal
                             </h2>
                         </div>
                         <div class="card-body">
@@ -282,7 +302,7 @@
                     <div class="card shadow border-0">
                         <div class="card-header border-0 bg-transparent">
                             <h2 class="card-title text-secondary-emphasis fw-bold">
-                                Last 30 Days Fats Consumed
+                                Fats Consumed During Goal
                             </h2>
                         </div>
                         <div class="card-body">
@@ -290,10 +310,74 @@
                         </div>
                     </div>
                 </div>
+                <div class="col col-12 col-md-12 col-lg-12">
+                    <div class="card shadow border-0">
+                        <div class="card-header border-0 bg-transparent">
+                            <h2 class="card-title text-secondary-emphasis fw-bold">
+                                Weight During Goal
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="Chart-Weight" width="800" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
     </section>
+    <!-- Modal -->
+    <div class="modal fade" id="goal-modal" tabindex="-1" aria-labelledby="goal-modal" aria-hidden="true">
+        <form enctype="multipart/form-data" method="post" action=".">
+            {% csrf_token %}
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="goal-modal-title">Goal Form</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-gap-4">
+                            <div class="col col-12 col-md-6">
+                                <label for="{{ form.calorie_goal.name }}" class="form-label">
+                                    Calorie
+                                </label>
+                                {{ form.calorie_goal }}
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <label for="{{ form.protein_goal.name }}" class="form-label">
+                                    Protein
+                                </label>
+                                {{ form.protein_goal }}
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <label for="{{ form.carbs_goal.name }}" class="form-label">
+                                    Carbohydrate
+                                </label>
+                                {{ form.carbs_goal }}
+                            </div>
+                            <div class="col col-12 col-md-6">
+                                <label for="{{ form.fats_goal.name }}" class="form-label">
+                                    Fat
+                                </label>
+                                {{ form.fats_goal }}
+                            </div>
+                            <div class="col col-12">
+                                <label class="form-label" for="{{ form.date.name }}">
+                                    {{ form.date.label }}
+                                </label>
+                                {{ form.date }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" role="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     </main>
 {% endblock %}
 {% block script %}
@@ -391,17 +475,15 @@
         };
 
 
-        const chartData = {
+        const WeightData = {
             labels: dailyLogsData.map(entry => entry.date),
             datasets: [
-
-
                 {
-                    label: 'Weight(KG)',
+                    label: 'Weight(Kg)',
                     data: dailyLogsData.map(entry => entry.weight),
                     borderColor: '#212529',
                     backgroundColor: 'rgba(33, 37, 41,0.1)',
-                    fill: false
+                    fill: true
                 },
             ],
         };
@@ -411,6 +493,7 @@
         const ctxProtein = document.getElementById('Chart-Protein')
         const ctxCarb = document.getElementById('Chart-Carb')
         const ctxFat = document.getElementById('Chart-Fat')
+        const ctxWeight = document.getElementById('Chart-Weight')
 
 
         new Chart(ctxCalorie, {
@@ -434,6 +517,11 @@
         new Chart(ctxFat, {
             type: 'line',
             data: FatData,
+
+        });
+        new Chart(ctxWeight, {
+            type: 'line',
+            data: WeightData,
 
         });
     </script>
