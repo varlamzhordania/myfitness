@@ -1,14 +1,19 @@
 {% url "main:home" as home %}
 {% url "main:dashboard" as dashboard %}
 {% url "main:logs" as logs %}
-<header class="">
-    <nav class="navbar navbar-expand-lg  {% if request.path == home %}bg-transparent{% else %}bg-secondary-subtle{% endif %}">
+<header>
+    <nav id="navbar"
+         class="navbar navbar-expand-lg  {% if request.path == home %}bg-transparent{% else %}bg-secondary-subtle{% endif %}">
         <div class="container">
-            <a class="navbar-brand text-secondary-emphasis" href="{{ home }}">NutriTrack</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
-                    aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-flex justify-content-start align-items-center gap-2">
+                <button id="navbar-toggler" class="navbar-toggler border-0 outline-0" type="button" data-bs-toggle="collapse"
+                        {% if request.path == home %}onclick="navbarTogglerOnClick()"{% endif %}
+                        data-bs-target="#sidebar"
+                        aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand text-secondary-emphasis" href="{{ home }}">NutriTrack</a>
+            </div>
             <div class="collapse navbar-collapse" id="sidebar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3">
                     <li class="nav-item">
@@ -28,7 +33,8 @@
                 <div>
                     {% if user.is_authenticated %}
                         <div class="dropdown">
-                            <button class="btn {% if request.path == home %}btn-secondary{% else %}btn-primary{% endif %} rounded-circle" type="button" data-bs-toggle="dropdown"
+                            <button class="btn {% if request.path == home %}btn-secondary{% else %}btn-primary{% endif %} rounded-circle"
+                                    type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                 <i class="bi bi-person-fill"></i>
                             </button>

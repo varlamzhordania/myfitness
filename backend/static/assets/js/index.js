@@ -1,7 +1,18 @@
 const toastLiveExample = document.getElementsByClassName('toast')
+const navbar = document.getElementById("navbar")
+const navbarToggler = document.getElementById("navbar-toggler")
+
+function navbarTogglerOnClick() {
+    if (navbarToggler.getAttribute("aria-expanded") === "true") {
+        navbar.classList.remove("bg-transparent");
+        navbar.classList.add("bg-light");
+    } else {
+        navbar.classList.remove("bg-light");
+        navbar.classList.add("bg-transparent");
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
-
 
     const triggerToast = (item) => {
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(item)
