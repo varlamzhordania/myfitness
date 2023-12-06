@@ -43,7 +43,7 @@ def dashboard(request, *args, **kwargs):
     nutritional_goal = NutritionalGoal.objects.filter(user=request.user, is_active=True).first()
 
     # Fetch the user's daily logs up to today
-    daily_logs = DailyLog.objects.filter(user=request.user, date__gt=nutritional_goal.updated_at)
+    daily_logs = DailyLog.objects.filter(user=request.user, date__lte=today)
 
     today_logs = daily_logs.filter(date=today)
 
@@ -51,10 +51,11 @@ def dashboard(request, *args, **kwargs):
 
     # Calculate the total consumed values from all daily logs
     if nutritional_goal:
-        total_calories_consumed = sum(log.total_calories_consumed() for log in daily_logs)
-        total_protein_consumed = sum(log.total_protein_consumed() for log in daily_logs)
-        total_carbs_consumed = sum(log.total_carbs_consumed() for log in daily_logs)
-        total_fats_consumed = sum(log.total_fats_consumed() for log in daily_logs)
+        nutritional_logs = daily_logs.filter(date__gte=nutritional_goal.updated_at)
+        total_calories_consumed = sum(log.total_calories_consumed() for log in nutritional_logs)
+        total_protein_consumed = sum(log.total_protein_consumed() for log in nutritional_logs)
+        total_carbs_consumed = sum(log.total_carbs_consumed() for log in nutritional_logs)
+        total_fats_consumed = sum(log.total_fats_consumed() for log in nutritional_logs)
 
         # Calculate the percentage of goal achieved
         percentage_calories = (total_calories_consumed / nutritional_goal.calorie_goal) * 100
