@@ -3,15 +3,30 @@
 {% block content %}
     <main>
         <section class="hero">
-            <div class="card w-75 mx-auto bg-transparent border-0 text-center">
-                <div class="card-header bg-transparent border-0">
-                    {#                    <h1 class="card-title display-3 fw-bold text-light">#}
-                    {#                        Welcome to <strong class="text-primary">NutriTrack</strong>#}
-                    {#                    </h1>#}
+            <img src="{% static 'assets/img/wave.svg' %}" alt="blue wave"/>
+            <div class="container">
+                <div class="card bg-transparent border-0 " style="max-width: 650px">
+                    <div class="card-header bg-transparent border-0">
+                        <h1 class="card-title display-3 fw-bold text-dark">
+                            Elevate Your Wellness Journey with <strong class="text-secondary">NutriTrack</strong>
+                        </h1>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Welcome to NutriTrack, your all-in-one destination for holistic health and fitness.
+                            Transform the way you nourish your body, achieve your nutritional goals, and embark on a
+                            journey towards a healthier, happier you.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{% url 'main:dashboard' %}" class="btn btn-secondary fw-bold rounded-pill">START
+                            JOURNEY</a>
+                        <a href="#learn" class="btn btn-outline-secondary fw-bold rounded-pill">Learn More</a>
+                    </div>
                 </div>
             </div>
         </section>
-        <section class="container py-5 my-5">
+        <section class="container py-5 my-5" id="learn" name="learn">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 align-items-center">
                 <div class="col">
                     <div class="card bg-transparent border-0">
@@ -22,7 +37,7 @@
                     <div class="card bg-transparent border-0">
                         <div class="card-header bg-transparent border-0">
                             <h2 class="card-title fw-bold">
-                                Elevate Your <span class="text-secondary">Well-Being</span> Journey
+                                Start Your <span class="text-secondary">Well-Being</span> Journey
                             </h2>
                         </div>
                         <div class="card-body">
@@ -86,8 +101,11 @@
                 </div>
             </div>
         </section>
-        <section class="py-5 my-5 bg-primary-subtle">
-            <div class="container">
+        <section class="my-5 bg-primary-subtle position-relative"
+                 style="box-shadow: 0 0 1px var(--bs-primary-bg-subtle) !important;">
+            <img src="{% static 'assets/img/wave-3.svg' %}" alt="wave" class="position-absolute bottom-100"
+                 style="z-index: -1">
+            <div class="container py-5">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-gap-4">
                     <div class="col">
                         <div class="card h-100 border-0 shadow-lg bg-dark">
@@ -126,7 +144,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card h-100 border-2 bg-transparent">
+                        <div class="card h-100 border-0 bg-white shadow-lg">
                             <div class="card-header bg-transparent border-0">
                                 <h3 class="card-title">
                                     Weight Management Insight:
@@ -161,6 +179,7 @@
                     </div>
                 </div>
             </div>
+            <img src="{% static 'assets/img/wave-2.svg' %}" alt="wave" class="position-absolute" style="z-index: -1">
         </section>
         <section class="container py-5 my-5">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 align-items-center">
@@ -216,30 +235,30 @@
 
             </div>
         </section>
-        <section class="py-5 my-5 bg-primary-subtle">
+        <section class="py-5 my-t bg-primary-subtle">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center flex-wrap">
                     <h2 class="fw-bold text-center display-4">
                         Connect with NutriTrack
                     </h2>
                     <ul class="list-unstyled d-flex justify-content-center align-items-center gap-5">
-                        <li class="bg-dark py-1 px-2 rounded-3">
-                            <a href="#" class="link-light">
+                        <li class=" py-1 px-2 rounded-3">
+                            <a href="#" class="link-dark">
                                 <i class="bi bi-facebook display-5"></i>
                             </a>
                         </li>
-                        <li class="bg-dark py-1 px-2 rounded-3">
-                            <a href="#" class="link-light">
+                        <li class=" py-1 px-2 rounded-3">
+                            <a href="#" class="link-dark">
                                 <i class="bi bi-instagram display-5"></i>
                             </a>
                         </li>
-                        <li class="bg-dark py-1 px-2 rounded-3">
-                            <a href="#" class="link-light">
+                        <li class=" py-1 px-2 rounded-3">
+                            <a href="#" class="link-dark">
                                 <i class="bi bi-youtube display-5"></i>
                             </a>
                         </li>
-                        <li class="bg-dark py-1 px-2 rounded-3">
-                            <a href="#" class="link-light">
+                        <li class=" py-1 px-2 rounded-3">
+                            <a href="#" class="link-dark">
                                 <i class="bi bi-twitter-x display-5"></i>
                             </a>
                         </li>
@@ -249,5 +268,7 @@
 
             </div>
         </section>
+
+
     </main>
 {% endblock %}
