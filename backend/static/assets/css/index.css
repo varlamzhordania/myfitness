@@ -135,25 +135,15 @@ header{
     width: 100%;
     height: 100vh;
     border-radius: 0 0 0 50% / 0 0 0 100%;
-    animation: hero-load 1s;
 }
 
 .hero img {
     position: absolute;
-    top: 0;
+    top: -6%;
     right: -100%;
     transform: rotate(30deg);
-    z-index: -1;
 }
 
-@keyframes hero-load {
-    0% {
-        /*filter: grayscale(1);*/
-    }
-    100% {
-        /*filter: grayscale(0);*/
-    }
-}
 
 .hero-img {
     position: absolute;
